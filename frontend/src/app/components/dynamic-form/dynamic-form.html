@@ -1,0 +1,108 @@
+<form [formGroup]="form">
+  @for (column of columns; track column.propertyName) {
+    @switch (column.type) {
+      @case ('input') {
+        @switch (column.dataType) {
+          @case ('boolean') {
+            <mat-slide-toggle style="padding-bottom: 20px" [formControlName]="column.propertyName">
+              {{ column.displayName }}
+            </mat-slide-toggle>
+          }
+          @case ('number') {
+            <mat-form-field appearance="outline">
+              <mat-label>{{ column.displayName }}</mat-label>
+              <input
+                matInput
+                type="number"
+                [formControlName]="column.propertyName">
+              @if (enableValidation && form.get(column.propertyName)?.hasError('required')) {
+                <mat-error>{{ column.displayName }} is required</mat-error>
+              }
+              @if (enableValidation && form.get(column.propertyName)?.hasError('min')) {
+                <mat-error>
+                  Minimum value is {{ form.get(column.propertyName)?.errors?.['min'].min }}
+                </mat-error>
+              }
+            </mat-form-field>
+          }
+          @case ('string') {
+            <mat-form-field appearance="outline">
+              <mat-label>{{ column.displayName }}</mat-label>
+              <input
+                matInput
+                type="text"
+                [formControlName]="column.propertyName">
+              @if (enableValidation && form.get(column.propertyName)?.hasError('required')) {
+                <mat-error>{{ column.displayName }} is required</mat-error>
+              }
+            </mat-form-field>
+          }
+        }
+      }
+      @case ('enum') {
+        <mat-form-field appearance="outline">
+          <mat-label>{{ column.displayName }}</mat-label>
+          <mat-select [formControlName]="column.propertyName">
+            @for (enumValue of column.enumValues; track enumValue) {
+              <mat-option [value]="enumValue">
+                {{ formatEnumValue(enumValue) }}
+              </mat-option>
+            }
+          </mat-select>
+          @if (enableValidation && form.get(column.propertyName)?.hasError('required')) {
+            <mat-error>{{ column.displayName }} is required</mat-error>
+          }
+        </mat-form-field>
+      }
+      @case ('selectable') {
+        <div style="margin-bottom: 16px;">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <div matSuffix style="padding-right: 10px!important;">
+              @if (showButtons) {
+                @if (form.get(column.propertyName)?.value) {
+                  <button
+                    matIconButton
+                    matSuffix
+                    (click)="onEditClick(column.propertyName, column.tableIndexToSelectFrom!)"
+                    type="button"
+                    aria-label="Edit"
+                  >
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                }
+                <button
+                  matIconButton
+                  (click)="onAddClick(column.tableIndexToSelectFrom!)"
+                  type="button"
+                  aria-label="Add"
+                >
+                  <mat-icon>add</mat-icon>
+                </button>
+              }
+            </div>
+
+            <mat-label>{{ column.displayName }}</mat-label>
+            <input
+              matInput
+              [formControlName]="column.propertyName"
+              [matAutocomplete]="auto">
+            <mat-autocomplete
+              #auto="matAutocomplete">
+              @if (loadingMap()[column.propertyName]) {
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              }
+              @for (option of selectableOptions()[column.propertyName] | async; track option.id) {
+                <mat-option [value]="option.id">
+                  {{ getOptionDisplayValue(option, column.tableIndexToSelectFrom!) }}
+                </mat-option>
+              }
+            </mat-autocomplete>
+            @if (enableValidation && form.get(column.propertyName)?.hasError('required')) {
+              <mat-error>{{ column.displayName }} is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      }
+    }
+  }
+</form>

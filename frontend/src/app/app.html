@@ -1,0 +1,32 @@
+<mat-toolbar id="header">
+  <button matIconButton (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>My App</span>
+  <mat-chip>
+    1.0
+  </mat-chip>
+  <span class="spacer"></span>
+  <router-outlet name="actions"></router-outlet>
+</mat-toolbar>
+<mat-sidenav-container style="display: contents;">
+  <mat-sidenav id="drawer" #drawer fixedInViewport="true" opened mode="side" fixedTopGap="60">
+    <div id="drawer-container">
+      <mat-nav-list>
+        <mat-list-item routerLink=""
+                       [activated]="router.url == '/' || router.url.startsWith('/home')">
+          <mat-icon matListItemIcon>space_dashboard</mat-icon>
+          Home
+        </mat-list-item>
+        <mat-list-item routerLink="operations"
+                       [activated]="router.url.startsWith('/operations')">
+          <mat-icon matListItemIcon>dataset</mat-icon>
+          Operations
+        </mat-list-item>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content id="drawer-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

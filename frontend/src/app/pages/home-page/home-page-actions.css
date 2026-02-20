@@ -1,0 +1,22 @@
+mat-dialog-content {
+  padding-top: 10px;
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 20px;
+}
+
+.error-container {
+  padding: 20px;
+  text-align: center;
+  color: #f44336;
+}

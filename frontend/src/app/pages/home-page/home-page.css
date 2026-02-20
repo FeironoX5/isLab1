@@ -1,0 +1,13 @@
+:host {
+  display: contents;
+}
+
+mat-chip.error {
+  --mat-chip-elevated-container-color: #732323;
+  --mat-chip-with-icon-icon-color: #eacfcf;
+  --mat-chip-label-text-color: #eacfcf;
+}
+
+mat-chip.error mat-icon {
+  color: #eacfcf;
+}

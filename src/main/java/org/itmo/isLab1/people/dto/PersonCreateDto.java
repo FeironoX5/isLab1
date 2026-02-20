@@ -1,14 +1,11 @@
 package org.itmo.isLab1.people.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
-
-import org.hibernate.validator.constraints.Length;
 import org.itmo.isLab1.people.enums.Color;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.time.LocalDateTime;
+import org.itmo.isLab1.people.enums.Country;
 
 @Data
 public class PersonCreateDto {
@@ -16,26 +13,17 @@ public class PersonCreateDto {
     @NotBlank
     private String name;
 
+    @NotNull
     private Color eyeColor;
-    
+
     @NotNull
     private Color hairColor;
 
     private Integer locationId;
 
-    @Past
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private LocalDateTime birthday;
+    @Positive
+    private Double weight;
 
     @NotNull
-    @Min(0)
-    private Float height;
-
-    @Min(0)
-    private Integer weight;
-
-    @NotNull
-    @NotBlank
-    @Length(max = 23)
-    private String passportId;
+    private Country nationality;
 }

@@ -1,16 +1,16 @@
 package org.itmo.isLab1.coordinates.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import jakarta.validation.constraints.*;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 @Data
 public class CoordinateUpdateDto {
     @NotNull
-    @Min(-998)
-    private JsonNullable<Integer> x;
+    private JsonNullable<Float> x;
 
     @NotNull
-    @Max(844)
-    private JsonNullable<Double> y;
+    @Min(-920)
+    private JsonNullable<Long> y;
 }

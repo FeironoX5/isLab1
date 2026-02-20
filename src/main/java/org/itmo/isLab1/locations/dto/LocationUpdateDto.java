@@ -1,22 +1,19 @@
 package org.itmo.isLab1.locations.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import jakarta.validation.constraints.*;
-
-import org.hibernate.validator.constraints.Length;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 @Data
 public class LocationUpdateDto {
     @NotNull
-    private JsonNullable<Long> x;
+    private JsonNullable<Float> x;
 
     private JsonNullable<Integer> y;
 
     @NotNull
-    private JsonNullable<Double> z;
+    private JsonNullable<Float> z;
 
     @NotNull
-    @Length(max = 240)
     private JsonNullable<String> name;
 }

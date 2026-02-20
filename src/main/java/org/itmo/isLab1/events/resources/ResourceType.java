@@ -12,16 +12,16 @@ public enum ResourceType {
     BATCH_IMPORT_HISTORY("batch-import-history"),
     @JsonProperty("coordinates")
     COORDINATES("coordinates"),
-    @JsonProperty("dragon-caves")
-    DRAGON_CAVES("dragon-caves"),
-    @JsonProperty("dragon-heads")
-    DRAGON_HEADS("dragon-heads"),
+    @JsonProperty("caves")
+    CAVES("caves"),
+    @JsonProperty("heads")
+    HEADS("heads"),
     @JsonProperty("dragons")
     DRAGONS("dragons"),
     @JsonProperty("locations")
     LOCATIONS("locations"),
-    @JsonProperty("people")
-    PEOPLE("people");
+    @JsonProperty("persons")
+    PERSONS("persons");
 
     private static final Map<String, ResourceType> resources = new HashMap<>();
 

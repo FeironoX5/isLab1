@@ -1,15 +1,15 @@
 package org.itmo.isLab1.coordinates.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class CoordinateCreateDto {
     @NotNull
-    @Min(-998)
-    private Integer x;
+    private Float x;
 
     @NotNull
-    @Max(844)
-    private Double y;
+    @Min(-920)
+    private Long y;
 }

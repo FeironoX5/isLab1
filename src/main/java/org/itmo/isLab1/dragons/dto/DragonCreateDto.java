@@ -1,13 +1,8 @@
 package org.itmo.isLab1.dragons.dto;
 
-
 import jakarta.validation.constraints.*;
 import lombok.Data;
-
-import org.itmo.isLab1.dragons.enums.DragonType;
-import org.itmo.isLab1.dragons.enums.DragonCharacter;
 import org.itmo.isLab1.people.enums.Color;
-
 
 @Data
 public class DragonCreateDto {
@@ -15,22 +10,27 @@ public class DragonCreateDto {
     @NotBlank
     private String name;
 
+    private java.time.LocalDateTime creationDate;
+
+    @NotNull
+    @Positive
+    private Long age;
+
+    @NotNull
+    private String description;
+
+    @NotNull
+    private Boolean speaking;
+
+    private Color color;
+
     @NotNull
     private Integer coordinatesId;
 
+    @NotNull
     private Integer caveId;
 
     private Integer killerId;
-
-    @Min(0)
-    private Integer age;
-
-    private Color color;
-  
-    private DragonType type;
-
-    @NotNull
-    private DragonCharacter character;
 
     private Integer headId;
 }

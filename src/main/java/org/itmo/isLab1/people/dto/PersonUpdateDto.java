@@ -1,15 +1,12 @@
 package org.itmo.isLab1.people.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
-import jakarta.validation.constraints.*;
-import org.openapitools.jackson.nullable.JsonNullable;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import org.hibernate.validator.constraints.Length;
 import org.itmo.isLab1.people.enums.Color;
-
-import java.time.LocalDateTime;
+import org.itmo.isLab1.people.enums.Country;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 @Data
 public class PersonUpdateDto {
@@ -17,26 +14,17 @@ public class PersonUpdateDto {
     @NotBlank
     private JsonNullable<String> name;
 
+    @NotNull
     private JsonNullable<Color> eyeColor;
-    
+
     @NotNull
     private JsonNullable<Color> hairColor;
 
     private JsonNullable<Integer> locationId;
 
-    @Past
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    private JsonNullable<LocalDateTime> birthday;
+    @Positive
+    private JsonNullable<Double> weight;
 
     @NotNull
-    @Min(0)
-    private JsonNullable<Float> height;
-
-    @Min(0)
-    private JsonNullable<Integer> weight;
-
-    @NotNull
-    @NotBlank
-    @Length(max = 23)
-    private JsonNullable<String> passportId;
+    private JsonNullable<Country> nationality;
 }

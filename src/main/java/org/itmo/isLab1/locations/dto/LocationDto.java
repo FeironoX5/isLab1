@@ -8,8 +8,8 @@ import org.itmo.isLab1.common.framework.dto.CrudDto;
 @EqualsAndHashCode(callSuper = true)
 public class LocationDto extends CrudDto {
     private int id;
-    private Long x;
+    private Float x;
     private Integer y;
-    private Double z;
+    private Float z;
     private String name;
 }

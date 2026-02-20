@@ -13,11 +13,11 @@ public class BatchOperationDto {
 
     public enum ResourceType {
         COORDINATES("coordinates"),
-        DRAGON_CAVES("dragon-caves"),
-        DRAGON_HEADS("dragon-heads"),
+        CAVES("caves"),
+        HEADS("heads"),
         DRAGONS("dragons"),
         LOCATIONS("locations"),
-        PEOPLE("people");
+        PERSONS("persons");
 
         private final String value;
 

@@ -1,11 +1,10 @@
 package org.itmo.isLab1.dragonheads;
 
-import lombok.*;
 import jakarta.persistence.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.itmo.isLab1.common.framework.CrudEntity;
-import org.hibernate.annotations.Cache;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.itmo.isLab1.common.framework.CrudEntity;
 
 @Entity
 @Getter
@@ -13,12 +12,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Cacheable
-@org.hibernate.annotations.Cache(
-        usage = CacheConcurrencyStrategy.READ_WRITE,
-        region = "entity"
-)
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "entity")
 @Table(name = "dragon_heads")
 public class DragonHead extends CrudEntity {
     @Id
@@ -27,5 +22,12 @@ public class DragonHead extends CrudEntity {
     private int id;
 
     @Column(name = "size")
-    private Float size;
+    private Integer size;
+
+    @NotNull
+    @Column(name = "eyes_count", nullable = false)
+    private Float eyesCount;
+
+    @Column(name = "tooth_count")
+    private Float toothCount;
 }

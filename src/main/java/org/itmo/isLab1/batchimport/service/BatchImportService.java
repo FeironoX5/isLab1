@@ -178,11 +178,11 @@ public class BatchImportService {
 
         switch (resourceType) {
             case COORDINATES -> processCoordinateOperation(operationType, operation);
-            case DRAGON_CAVES -> processDragonCaveOperation(operationType, operation);
-            case DRAGON_HEADS -> processDragonHeadOperation(operationType, operation);
+            case CAVES -> processDragonCaveOperation(operationType, operation);
+            case HEADS -> processDragonHeadOperation(operationType, operation);
             case DRAGONS -> processDragonOperation(operationType, operation);
             case LOCATIONS -> processLocationOperation(operationType, operation);
-            case PEOPLE -> processPersonOperation(operationType, operation);
+            case PERSONS -> processPersonOperation(operationType, operation);
             default -> throw new IllegalArgumentException("Unknown resource type: " + resourceType);
         }
     }

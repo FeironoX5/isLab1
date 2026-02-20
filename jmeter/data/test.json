@@ -1,17 +1,32 @@
 [
   {
     "type": "CREATE",
+    "resourceType": "coordinates",
+    "body": {
+      "x": 101,
+      "y": 201.5
+    }
+  },
+  {
+    "type": "CREATE",
+    "resourceType": "dragon-heads",
+    "body": {
+      "size": 10.5
+    }
+  },
+  {
+    "type": "CREATE",
     "resourceType": "dragons",
     "body": {
-      "name": "Dragon1",
+      "name": "dragon_batch_1",
       "type": "AIR",
-      "age": 300,
-      "coordinates": {
-        "x": 1000,
-        "y": 200
-      },
       "character": "EVIL",
-      "headId": 10
+      "age": 300,
+      "color": "BLUE",
+      "coordinates": {
+        "x": 120,
+        "y": 220.0
+      }
     }
   }
 ]

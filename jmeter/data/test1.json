@@ -1,43 +1,36 @@
 [
   {
-    "type": "UPDATE",
+    "type": "CREATE",
     "resourceType": "locations",
-    "resourceId": 1,
     "body": {
-      "name": "update_jmeter",
-      "x": 550
+      "name": "location_batch_1",
+      "x": 550,
+      "y": 10,
+      "z": 300.5
     }
   },
   {
     "type": "CREATE",
     "resourceType": "people",
     "body": {
-      "name": "people_jmeter",
+      "name": "person_batch_1",
       "hairColor": "YELLOW",
-      "height": 150.59,
-      "passportId": "12345qwwedfgh"
-    }
-  },
-  {
-    "type": "UPDATE",
-    "resourceType": "people",
-    "resourceId": 17,
-    "body": {
-      "name": "qwerty",
-      "locationId": 1,
-      "passportId": "abpupupu"
+      "eyeColor": "BLUE",
+      "height": 180.5,
+      "weight": 80,
+      "passportId": "BATCHPERSON001"
     }
   },
   {
     "type": "CREATE",
     "resourceType": "dragons",
     "body": {
-      "name": "Dragon Name",
+      "name": "dragon_batch_2",
       "type": "FIRE",
-      "character": "EVIL",
+      "character": "FICKLE",
       "coordinates": {
-        "x": 1000,
-        "y": 200
+        "x": 150,
+        "y": 250.0
       }
     }
   }

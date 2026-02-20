@@ -1,44 +1,34 @@
 [
   {
     "type": "CREATE",
+    "resourceType": "dragon-caves",
+    "body": {
+      "depth": 400
+    }
+  },
+  {
+    "type": "CREATE",
     "resourceType": "coordinates",
     "body": {
-      "x": 1000,
-      "y": 200
-    }
-  },
-  {
-    "type": "CREATE",
-    "resourceType": "people",
-    "body": {
-      "name": "people_jmeter",
-      "hairColor": "YELLOW",
-      "height": 150.59,
-      "passportId": "5rqw5121267dfgh"
+      "x": 222,
+      "y": 333.3
     }
   },
   {
     "type": "CREATE",
     "resourceType": "dragons",
     "body": {
-      "name": "Dragon Name",
-      "type": "FIRE",
-      "character": "EVIL",
-      "coordinates": {
-        "x": 1000,
-        "y": 200
-      }
-    }
-  },
-  {
-    "type": "UPDATE",
-    "resourceType": "dragons",
-    "resourceId": 1,
-    "body": {
-      "name": "Dragon update jmeter",
+      "name": "dragon_batch_3",
       "type": "UNDERGROUND",
-      "character": "EVIL"
-
+      "character": "CHAOTIC_EVIL",
+      "age": 120,
+      "coordinates": {
+        "x": 200,
+        "y": 300.0
+      },
+      "cave": {
+        "depth": 123
+      }
     }
   }
 ]

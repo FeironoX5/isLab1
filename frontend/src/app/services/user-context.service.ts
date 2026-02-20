@@ -14,4 +14,24 @@ export class UserContextService {
     this.role.set(role || 'user');
     localStorage.setItem('role', this.role());
   }
+
+  getToken(): string | null {
+    return (
+      localStorage.getItem('token') ||
+      localStorage.getItem('jwt') ||
+      localStorage.getItem('authToken') ||
+      null
+    );
+  }
+
+  setToken(token: string | null) {
+    if (!token) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('jwt');
+      localStorage.removeItem('authToken');
+      return;
+    }
+
+    localStorage.setItem('token', token);
+  }
 }

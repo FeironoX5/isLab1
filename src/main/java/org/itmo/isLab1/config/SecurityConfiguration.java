@@ -38,9 +38,9 @@ public class SecurityConfiguration {
     private static final List<String> crudResources = Arrays.asList(
         "dragons",
         "coordinates",
-        "dragon-caves",
-        "people",
-        "dragon-heads",
+        "caves",
+        "persons",
+        "heads",
         "locations"
     );
 
@@ -94,11 +94,11 @@ public class SecurityConfiguration {
 
                 request
                     // Доступ к специальным операциям над объектами
-                    .requestMatchers(HttpMethod.GET, "/api/special-operations/average-age").permitAll() // рассчитать среднее значение поля age для всех объектов
-                    .requestMatchers(HttpMethod.GET, "/api/special-operations/oldest-dragon").permitAll() // вернуть один (любой) объект, значение поля age которого является максимальным
-                    .requestMatchers(HttpMethod.GET, "/api/special-operations/filter-by-name").permitAll() // вернуть массив объектов, значение поля name которых начинается с заданной подстроки
-                    .requestMatchers(HttpMethod.GET, "/api/special-operations/deepest-cave-dragon").permitAll() // найти дракона, живущего в самой глубокой пещере
-                    .requestMatchers(HttpMethod.POST, "/api/special-operations/kill-dragon/**").authenticated(); // убить указанного дракона
+                    .requestMatchers(HttpMethod.GET, "/api/operations/age/less-than").permitAll() // рассчитать среднее значение поля age для всех объектов
+                    .requestMatchers(HttpMethod.GET, "/api/operations/deepest-dragon").permitAll() // вернуть один (любой) объект, значение поля age которого является максимальным
+                    .requestMatchers(HttpMethod.GET, "/api/operations/description/less-than").permitAll() // вернуть массив объектов, значение поля name которых начинается с заданной подстроки
+                    .requestMatchers(HttpMethod.GET, "/api/operations/unique-colors").permitAll() // найти дракона, живущего в самой глубокой пещере
+                    .requestMatchers(HttpMethod.DELETE, "/api/operations/kill/**").authenticated(); // убить указанного дракона
 
                 crudResources.forEach(resource ->
                     request

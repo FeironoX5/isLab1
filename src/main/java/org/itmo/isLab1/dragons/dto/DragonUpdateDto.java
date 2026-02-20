@@ -1,12 +1,9 @@
 package org.itmo.isLab1.dragons.dto;
 
-import lombok.Data;
 import jakarta.validation.constraints.*;
-import org.openapitools.jackson.nullable.JsonNullable;
-import org.itmo.isLab1.dragons.enums.DragonType;
-import org.itmo.isLab1.dragons.enums.DragonCharacter;
+import lombok.Data;
 import org.itmo.isLab1.people.enums.Color;
-
+import org.openapitools.jackson.nullable.JsonNullable;
 
 @Data
 public class DragonUpdateDto {
@@ -14,22 +11,27 @@ public class DragonUpdateDto {
     @NotBlank
     private JsonNullable<String> name;
 
+    private JsonNullable<java.time.LocalDateTime> creationDate;
+
+    @NotNull
+    @Positive
+    private JsonNullable<Long> age;
+
+    @NotNull
+    private JsonNullable<String> description;
+
+    @NotNull
+    private JsonNullable<Boolean> speaking;
+
+    private JsonNullable<Color> color;
+
     @NotNull
     private JsonNullable<Integer> coordinatesId;
 
+    @NotNull
     private JsonNullable<Integer> caveId;
 
     private JsonNullable<Integer> killerId;
-
-    @Min(0)
-    private JsonNullable<Integer> age;
-
-    private JsonNullable<Color> color;
-  
-    private JsonNullable<DragonType> type;
-
-    @NotNull
-    private JsonNullable<DragonCharacter> character;
 
     private JsonNullable<Integer> headId;
 }

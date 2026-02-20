@@ -1,12 +1,10 @@
 package org.itmo.isLab1.dragoncaves;
 
-import lombok.*;
 import jakarta.persistence.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.itmo.isLab1.common.framework.CrudEntity;
-import org.hibernate.annotations.Cache;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
+import org.itmo.isLab1.common.framework.CrudEntity;
 
 @Entity
 @Getter
@@ -14,12 +12,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Cacheable
-@org.hibernate.annotations.Cache(
-        usage = CacheConcurrencyStrategy.READ_WRITE,
-        region = "entity"
-)
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "entity")
 @Table(name = "dragon_caves")
 public class DragonCave extends CrudEntity {
     @Id
@@ -27,7 +21,7 @@ public class DragonCave extends CrudEntity {
     @SequenceGenerator(name = "dragon_caves_id_seq", sequenceName = "dragon_caves_id_seq", allocationSize = 1)
     private int id;
 
-    @NonNull
+    @NotNull
     @Column(name = "depth", nullable = false)
-    private Integer depth;
+    private Double depth;
 }

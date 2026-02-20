@@ -1,9 +1,10 @@
 package org.itmo.isLab1.dragoncaves.dto;
 
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 @Data
 public class DragonCaveCreateDto {
-    @NonNull
-    private Integer depth;
+    @NotNull
+    private Double depth;
 }

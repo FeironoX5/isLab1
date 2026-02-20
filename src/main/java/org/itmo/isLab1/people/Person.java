@@ -1,20 +1,16 @@
 package org.itmo.isLab1.people;
 
-import lombok.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.itmo.isLab1.common.framework.CrudEntity;
 import org.itmo.isLab1.locations.Location;
 import org.itmo.isLab1.people.enums.Color;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import java.time.LocalDateTime;
+import org.itmo.isLab1.people.enums.Country;
 
 @Entity
 @Getter
@@ -22,58 +18,46 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Cacheable
-@org.hibernate.annotations.Cache(
-        usage = CacheConcurrencyStrategy.READ_WRITE,
-        region = "entity"
-)
-@Table(name = "people")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "entity")
+@Table(name = "persons")
 public class Person extends CrudEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "people_id_seq")
     @SequenceGenerator(name = "people_id_seq", sequenceName = "people_id_seq", allocationSize = 1)
     private int id;
 
-    @NotNull
     @NotBlank
+    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @JdbcType(PostgreSQLEnumJdbcType.class)
-    @ColumnTransformer(write="?::color")
-    @Column(name = "eye_color")
-    private Color eyeColor;
-    
     @NotNull
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
-    @ColumnTransformer(write="?::color")
+    @ColumnTransformer(write = "?::color")
+    @Column(name = "eye_color", nullable = false)
+    private Color eyeColor;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @ColumnTransformer(write = "?::color")
     @Column(name = "hair_color", nullable = false)
     private Color hairColor;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @Past
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "birthday", columnDefinition = "TIMESTAMP")
-    private LocalDateTime birthday;
-
-    @NotNull
-    @Min(0)
-    @Column(name = "height", nullable = false)
-    private Float height;
-
-    @Min(0)
+    @Positive
     @Column(name = "weight")
-    private Integer weight;
+    private Double weight;
 
     @NotNull
-    @NotBlank
-    @Length(max = 23)
-    @Column(name = "passport_id", nullable = false)
-    private String passportId;
+    @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
+    @ColumnTransformer(write = "?::country")
+    @Column(name = "nationality", nullable = false)
+    private Country nationality;
 }

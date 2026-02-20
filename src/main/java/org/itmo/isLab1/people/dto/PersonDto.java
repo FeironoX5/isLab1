@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import org.itmo.isLab1.common.framework.dto.CrudDto;
 import org.itmo.isLab1.locations.Location;
 import org.itmo.isLab1.people.enums.Color;
-import java.time.LocalDateTime;
+import org.itmo.isLab1.people.enums.Country;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -15,8 +15,6 @@ public class PersonDto extends CrudDto {
     private Color eyeColor;
     private Color hairColor;
     private Location location;
-    private LocalDateTime birthday;
-    private Float height;
-    private Integer weight;
-    private String passportId;
+    private Double weight;
+    private Country nationality;
 }

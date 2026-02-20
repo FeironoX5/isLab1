@@ -13,7 +13,7 @@ import org.itmo.isLab1.dragoncaves.DragonCave;
     unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public abstract class DragonCaveMapper implements CrudMapper<DragonCave, DragonCaveDto, DragonCaveCreateDto, DragonCaveUpdateDto> {
-    public abstract DragonCave map(DragonCaveUpdateDto dto);
+    public abstract DragonCave map(DragonCaveCreateDto dto);
     public abstract DragonCaveDto map(DragonCave model);
     public abstract DragonCave map(DragonCaveDto model);
     public abstract void update(DragonCaveUpdateDto dto, @MappingTarget DragonCave model);

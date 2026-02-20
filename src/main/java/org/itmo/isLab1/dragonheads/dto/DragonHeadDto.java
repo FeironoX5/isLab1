@@ -8,5 +8,7 @@ import org.itmo.isLab1.common.framework.dto.CrudDto;
 @EqualsAndHashCode(callSuper = true)
 public class DragonHeadDto extends CrudDto {
     private int id;
-    private Float size;
+    private Integer size;
+    private Float eyesCount;
+    private Float toothCount;
 }

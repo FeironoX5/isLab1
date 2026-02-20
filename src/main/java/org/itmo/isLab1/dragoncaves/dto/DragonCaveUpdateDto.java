@@ -1,10 +1,11 @@
 package org.itmo.isLab1.dragoncaves.dto;
 
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 @Data
 public class DragonCaveUpdateDto {
-    @NonNull
-    private JsonNullable<Integer> depth;
+    @NotNull
+    private JsonNullable<Double> depth;
 }

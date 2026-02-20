@@ -1,12 +1,10 @@
 package org.itmo.isLab1.coordinates;
 
-import lombok.*;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import org.hibernate.annotations.Cache;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.itmo.isLab1.common.framework.CrudEntity;
 
 @Entity
@@ -15,12 +13,8 @@ import org.itmo.isLab1.common.framework.CrudEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 @Cacheable
-@org.hibernate.annotations.Cache(
-        usage = CacheConcurrencyStrategy.READ_WRITE,
-        region = "entity"
-)
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "entity")
 @Table(name = "coordinates")
 public class Coordinate extends CrudEntity {
     @Id
@@ -29,12 +23,11 @@ public class Coordinate extends CrudEntity {
     private int id;
 
     @NotNull
-    @Min(-998)
     @Column(name = "x", nullable = false)
-    private Integer x;
+    private Float x;
 
     @NotNull
-    @Max(844)
+    @Min(-920)
     @Column(name = "y", nullable = false)
-    private Double y;
+    private Long y;
 }

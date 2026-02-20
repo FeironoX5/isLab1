@@ -30,8 +30,8 @@ public abstract class CrudController<
   @GetMapping
   public ResponseEntity<Page<TDto>> index(
       @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
-      @RequestParam(value = "filter", defaultValue = "") String[] filters) {
-    Map<String, String> filterMap = parseFilters(filters);
+      @RequestParam(value = "search") String search) {
+    Map<String, String> filterMap = parseSearch(search);
 
     var objs = service.getAll(pageable, filterMap);
     
@@ -54,7 +54,7 @@ public abstract class CrudController<
     return ResponseEntity.status(HttpStatus.CREATED).body(obj);
   }
 
-  @PatchMapping("/{id}")
+  @PutMapping("/{id}")
   @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   public ResponseEntity<TDto> update(@PathVariable int id, @Valid @RequestBody TUpdateDto request) {
     var obj = service.update(request, id);
@@ -70,14 +70,19 @@ public abstract class CrudController<
     return ResponseEntity.notFound().build();
   }
 
-  private Map<String, String> parseFilters(String[] filters) {
+  private Map<String, String> parseSearch(String search) {
     Map<String, String> filterMap = new HashMap<>();
-    if (filters != null) {
-      for (String filter : filters) {
-        String[] parts = filter.split(":", 2);
-        if (parts.length == 2) {
-          filterMap.put(parts[0], parts[1]);
-        }
+    if (search == null || search.isBlank()) {
+      return filterMap;
+    }
+
+    String[] conditions = search.split(",");
+    for (String condition : conditions) {
+      String[] parts = condition.split(":", 2);
+      if (parts.length == 2) {
+        filterMap.put(parts[0].trim(), parts[1].trim());
+      } else {
+        filterMap.put("name", condition.trim());
       }
     }
     return filterMap;

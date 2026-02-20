@@ -3,10 +3,9 @@ import {provideRouter} from '@angular/router';
 import {HomePage} from './pages/home-page/home-page';
 import {OperationsPage} from './pages/operations-page/operations-page';
 import {HomePageActions} from './pages/home-page/home-page-actions';
-import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {provideHttpClient} from '@angular/common/http';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {OperationsPageActions} from './pages/operations-page/operations-page-actions';
-import {authInterceptor} from './services/auth.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -34,7 +33,7 @@ export const appConfig: ApplicationConfig = {
         ]
       },
     ]),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(),
     provideNativeDateAdapter()
   ]
 };

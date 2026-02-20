@@ -7,7 +7,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.itmo.isLab1.adminrequests.dto.AdminRequestDto;
 
@@ -19,7 +18,6 @@ public class AdminRequestController {
     private final AdminRequestService service;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<Page<AdminRequestDto>> index(@PageableDefault(size = 20) Pageable pageable) {
         var adminRequests = service.getAll(pageable);
         return ResponseEntity.ok()
@@ -28,7 +26,6 @@ public class AdminRequestController {
     }
 
     @GetMapping("/pending")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Page<AdminRequestDto>> indexPending(@PageableDefault(size = 20) Pageable pageable) {
         var adminRequests = service.getAllPending(pageable);
         return ResponseEntity.ok()
@@ -37,7 +34,6 @@ public class AdminRequestController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<AdminRequestDto> show(@PathVariable int id) {
         var adminRequest = service.getById(id);
         return ResponseEntity.ok(adminRequest);
@@ -45,14 +41,12 @@ public class AdminRequestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<AdminRequestDto> create() {
         var adminRequest = service.create();
         return ResponseEntity.status(HttpStatus.CREATED).body(adminRequest);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AdminRequestDto> process(@PathVariable int id, @RequestParam boolean approved) {
         var adminRequest = service.process(id, approved);
         return ResponseEntity.ok(adminRequest);

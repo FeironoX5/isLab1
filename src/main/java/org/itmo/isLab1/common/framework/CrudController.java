@@ -9,7 +9,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -48,21 +47,18 @@ public abstract class CrudController<
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   public ResponseEntity<TDto> create(@Valid @RequestBody TCreateDto request) {
     var obj = service.create(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(obj);
   }
 
   @PatchMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   public ResponseEntity<TDto> update(@PathVariable int id, @Valid @RequestBody TUpdateDto request) {
     var obj = service.update(request, id);
     return ResponseEntity.ok(obj);
   }
 
   @DeleteMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   public ResponseEntity<Void> delete(@PathVariable int id) {
     if (service.delete(id)) {
       return ResponseEntity.noContent().build();

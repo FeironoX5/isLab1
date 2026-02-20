@@ -15,46 +15,70 @@ import org.itmo.isLab1.common.errors.UserWithThisUsernameAlreadyExists;
 @RequiredArgsConstructor
 public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final String SYSTEM_USER = "system";
+
     private final UserRepository repository;
 
     public User save(User user) {
-    return repository.save(user);
+        return repository.save(user);
     }
 
     @Transactional
     public User create(User user) {
-    if (repository.existsByUsername(user.getUsername())) {
-        throw new UserWithThisUsernameAlreadyExists("Пользователь с таким именем уже существует");
+        if (repository.existsByUsername(user.getUsername())) {
+            throw new UserWithThisUsernameAlreadyExists("Пользователь с таким именем уже существует");
+        }
+
+        if (repository.count() == 0) {
+            logger.info("Creating first user with ADMIN role");
+            user.setRole(Role.ROLE_ADMIN);
+        } else {
+            user.setRole(Role.ROLE_USER);
+        }
+        return save(user);
     }
 
-    if (repository.count() == 0) {
-        logger.info("Creating first user with ADMIN role");
-        user.setRole(Role.ROLE_ADMIN);
-    } else {
-        user.setRole(Role.ROLE_USER);
-    }
-    return save(user);
-    }
-
-    // Получение пользователя по имени пользователя
     public User getByUsername(String username) {
         return repository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
     }
 
-    // Получение пользователя по имени пользователя
     public UserDetailsService userDetailsService() {
         return this::getByUsername;
     }
 
-    // Получение текущего пользователя
     public String getCurrentUsername() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+
+        var username = authentication.getName();
+        if (username == null || "anonymousUser".equals(username)) {
+            return null;
+        }
+
+        return username;
     }
 
-    // Получение имени текущего пользователя из контекста Spring Security
     public User getCurrentUser() {
         var username = getCurrentUsername();
-        return getByUsername(username);
+        if (username != null) {
+            var user = repository.findByUsername(username).orElse(null);
+            if (user != null) {
+                return user;
+            }
+        }
+
+        return repository.findByUsername(SYSTEM_USER).orElseGet(() -> {
+            logger.info("Creating fallback SYSTEM user for no-auth mode");
+            return repository.save(
+                User.builder()
+                    .username(SYSTEM_USER)
+                    .role(Role.ROLE_ADMIN)
+                    .password("NO_AUTH")
+                    .build()
+            );
+        });
     }
 }

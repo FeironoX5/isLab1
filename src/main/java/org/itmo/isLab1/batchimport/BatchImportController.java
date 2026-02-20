@@ -11,7 +11,6 @@ import org.itmo.isLab1.common.minIO.MinioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +29,6 @@ public class BatchImportController {
     private final MinioService minioService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<BatchImportResponseDto> importFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             throw new IllegalArgumentException("File is empty");
@@ -48,7 +46,7 @@ public class BatchImportController {
             // Передаем путь к файлу в сервис для обработки
             BatchImportResponseDto response = batchImportService.importBatch(jsonNode, filePath);
             log.info("Импорт файла {} успешно завершен. Успешно: {}, Ошибок: {}",
-                    filePath, response.successfulCount(), response.failedCount());
+                    filePath, response.getSuccessfulOperations(), response.getFailedOperations());
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (IOException e) {
             // При ошибке парсинга удаляем файл из MinIO

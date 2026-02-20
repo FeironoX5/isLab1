@@ -51,10 +51,6 @@ dependencies {
 	implementation 'org.projectlombok:lombok-mapstruct-binding:0.1.0'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.2'
 
-	// JJWT
-	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
 	// Database
 	runtimeOnly 'org.postgresql:postgresql'
@@ -89,7 +85,6 @@ dependencies {
 	// Testing
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 flyway {

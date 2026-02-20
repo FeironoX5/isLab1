@@ -3,13 +3,10 @@ package org.itmo.isLab1.users;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.itmo.isLab1.common.errors.UserWithThisUsernameAlreadyExists;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -43,33 +40,7 @@ public class UserService {
             .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
     }
 
-    public UserDetailsService userDetailsService() {
-        return this::getByUsername;
-    }
-
-    public String getCurrentUsername() {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
-        }
-
-        var username = authentication.getName();
-        if (username == null || "anonymousUser".equals(username)) {
-            return null;
-        }
-
-        return username;
-    }
-
     public User getCurrentUser() {
-        var username = getCurrentUsername();
-        if (username != null) {
-            var user = repository.findByUsername(username).orElse(null);
-            if (user != null) {
-                return user;
-            }
-        }
-
         return repository.findByUsername(SYSTEM_USER).orElseGet(() -> {
             logger.info("Creating fallback SYSTEM user for no-auth mode");
             return repository.save(

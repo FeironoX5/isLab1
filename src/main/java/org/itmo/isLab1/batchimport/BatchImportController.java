@@ -47,8 +47,6 @@ public class BatchImportController {
             
             // Передаем путь к файлу в сервис для обработки
             BatchImportResponseDto response = batchImportService.importBatch(jsonNode, filePath);
-            log.info("Импорт файла {} успешно завершен. Успешно: {}, Ошибок: {}",
-                    filePath, response.successfulCount(), response.failedCount());
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } catch (IOException e) {
             // При ошибке парсинга удаляем файл из MinIO

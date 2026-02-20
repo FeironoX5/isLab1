@@ -140,7 +140,7 @@ export class OperationsPageAction implements OnDestroy {
     queryParams.forEach(param => {
       const value = formValue[param.column.propertyName];
       if (value !== undefined && value !== null && value !== '') {
-        httpParams = httpParams.set('value', value.toString());
+        httpParams = httpParams.set(param.column.propertyName, value.toString());
       }
     });
 

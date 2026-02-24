@@ -1,21 +1,34 @@
 export enum Color {
+  RED = 'RED',
   BLUE = 'BLUE',
-  WHITE = 'WHITE',
-  BROWN = 'BROWN'
+  YELLOW = 'YELLOW',
+  ORANGE = 'ORANGE'
 }
 
 export interface Dragon {
   id?: number;
   name: string;
-  coordinates: Coordinates;
-  creationDate?: string;
-  cave: DragonCave;
-  killer?: Person;
-  age: number;
-  description: string;
-  speaking: boolean;
+  coordinatesId: number;
+  caveId?: number;
+  killerId?: number;
+  age?: number;
   color?: Color;
-  head?: DragonHead;
+  type?: DragonType;
+  character: DragonCharacter;
+  headId?: number;
+}
+
+export enum DragonType {
+  WATER = 'WATER',
+  UNDERGROUND = 'UNDERGROUND',
+  AIR = 'AIR',
+  FIRE = 'FIRE'
+}
+
+export enum DragonCharacter {
+  EVIL = 'EVIL',
+  CHAOTIC_EVIL = 'CHAOTIC_EVIL',
+  FICKLE = 'FICKLE'
 }
 
 export interface Coordinates {
@@ -24,41 +37,32 @@ export interface Coordinates {
   y: number;
 }
 
-
 export interface DragonCave {
   id?: number;
   depth: number;
 }
 
-export enum Country {
-  INDIA = 'INDIA',
-  VATICAN = 'VATICAN',
-  THAILAND = 'THAILAND',
-  SOUTH_KOREA = 'SOUTH_KOREA',
-  NORTH_KOREA = 'NORTH_KOREA'
-}
-
 export interface Person {
   id?: number;
   name: string;
-  eyeColor: Color;
+  eyeColor?: Color;
   hairColor: Color;
-  location?: Location;
-  weight: number;
-  nationality: Country;
+  locationId?: number;
+  birthday?: string;
+  height: number;
+  weight?: number;
+  passportId: string;
 }
 
 export interface DragonHead {
   id?: number;
   size?: number;
-  eyesCount: number;
-  toothCount?: number;
 }
 
 export interface Location {
   id?: number;
   x: number;
-  y: number;
+  y?: number;
   z: number;
   name: string;
 }
@@ -79,6 +83,7 @@ export interface TableConfig {
   entityUrl: string;
   columns: ColumnConfig[];
   displayFormatter: (entity: any) => string;
+  readOnly?: boolean;
 }
 
 export interface ParamConfig {

@@ -151,10 +151,12 @@ abstract class BaseDialogAction implements OnInit, OnDestroy {
   standalone: true,
   imports: [MatIcon, MatButton],
   template: `
-    <button matButton="tonal" (click)="openDialog()">
-      <mat-icon>add</mat-icon>
-      Add {{ selectedTable.title.toLowerCase() }} entry
-    </button>
+    @if (!selectedTable.readOnly) {
+      <button matButton="tonal" (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+        Add {{ selectedTable.title.toLowerCase() }} entry
+      </button>
+    }
   `
 })
 export class HomePageActions implements AfterViewInit {
@@ -173,6 +175,7 @@ export class HomePageActions implements AfterViewInit {
   }
 
   openDialog() {
+    if (this.selectedTable.readOnly) return;
     this.dialog.open(HomePageCreateAction, {
       data: {tableIndex: this.tableIndex()},
       width: '600px',
@@ -298,7 +301,17 @@ export class HomePageEditAction extends BaseDialogAction {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (result) => {
-          this.initialData.set(result);
+          const normalized = {...result};
+          this.tableConfig().columns
+            .filter(c => c.type === 'selectable')
+            .forEach(c => {
+              if (normalized[c.propertyName] === undefined) {
+                const key = c.propertyName.endsWith('Id') ? c.propertyName.slice(0, -2) : c.propertyName;
+                normalized[c.propertyName] = normalized[key]?.id;
+              }
+            });
+
+          this.initialData.set(normalized);
           this.isLoading.set(false);
           this.cdr.detectChanges();
         },

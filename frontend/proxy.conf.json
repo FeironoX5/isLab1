@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://localhost:8080/lab1-1.0-SNAPSHOT",
+    "target": "http://localhost:15123",
     "secure": false,
     "changeOrigin": true
   }

@@ -28,10 +28,11 @@ import {MatTableModule} from '@angular/material/table';
 export class OperationsPage implements OnInit {
   private readonly dialog = inject(MatDialog);
   private readonly http = inject(HttpClient);
+
   protected readonly operations = operations;
   protected history = signal<any[]>([]);
   protected importMessage = signal<string>('');
-  protected readonly displayedColumns = ['id', 'status', 'addedCount', 'createdAt'];
+  protected readonly displayedColumns = ['id', 'status', 'successfulOperations', 'filePath', 'createdAt'];
 
   ngOnInit() {
     this.loadHistory();
@@ -52,19 +53,21 @@ export class OperationsPage implements OnInit {
 
     const formData = new FormData();
     formData.append('file', file, file.name);
-    this.http.post<any>(`/api/batch-import`, formData).subscribe({
-        next: (res) => {
-          this.importMessage.set(`Import completed. Success: ${res.successfulOperations}, failed: ${res.failedOperations}`);
-          this.loadHistory();
-        },
-        error: (err) => {
-          this.importMessage.set(`Import failed: ${err?.error?.error || err.message}`);
-          this.loadHistory();
-        }
-      });
+    this.http.post<any>('/api/batch-import', formData).subscribe({
+      next: (res) => {
+        this.importMessage.set(`Import completed. Success: ${res.successfulOperations}, failed: ${res.failedOperations}`);
+        this.loadHistory();
+      },
+      error: (err) => {
+        this.importMessage.set(`Import failed: ${err?.error?.error || err?.error?.message || err.message}`);
+        this.loadHistory();
+      }
+    });
   }
 
   loadHistory() {
-    this.http.get<any[]>(`/api/batch-import/history`).subscribe((res) => this.history.set(res));
+    this.http.get<any>('/api/batch-import/history?page=0&size=20&sort=createdAt,desc').subscribe((res) => {
+      this.history.set(res.content ?? []);
+    });
   }
 }
